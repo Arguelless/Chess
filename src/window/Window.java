@@ -62,7 +62,8 @@ public class GridPanelExample {
     public Window() {
 
         tablero = new JPanel(new GridLayout(8,8));
-
+        add(tablero);
+        setVisible(true);
 
 
     }
