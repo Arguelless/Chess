@@ -2,14 +2,14 @@ package window;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Window extends JFrame {
     private JPanel tablero;
 
 
-    private int cantidadBotones = 64;
     private JButton[][] casillas = new JButton[8][8]; //Matriz bidimensional para guardar las casillas (Botones)
-
 
 
 /*
@@ -61,13 +61,37 @@ public class GridPanelExample {
 
     public Window() {
 
-        tablero = new JPanel(new GridLayout(8,8));
-        add(tablero);
-        setVisible(true);
+        tablero = new JPanel(new GridLayout(8, 8)); // GridLayout con 8 filas y 8 columnas
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                JButton button = new JButton("(" + i + "," + j + ")");
+                button.addActionListener(new ButtonClickListener(i, j)); // Listener personalizado para cada botón
+                casillas[i][j] = button;
+                tablero.add(button);
+            }
+        }
+
+        this.add(tablero);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.pack();
+        this.setVisible(true);
 
 
     }
+    static class ButtonClickListener implements ActionListener {
+        private int row;
+        private int column;
 
+        public ButtonClickListener(int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
 
+        public void actionPerformed(ActionEvent event) {
+            System.out.println("Se hizo clic en el botón (" + row + "," + column + ")");
+        }
+    }
 
-}
+    }
