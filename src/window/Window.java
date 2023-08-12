@@ -1,9 +1,13 @@
 package window;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Window extends JFrame {
     private JPanel tablero;
@@ -59,18 +63,65 @@ public class GridPanelExample {
 
 * */
 
-    public Window() {
+    public Window() throws IOException {
+        Image pawnw = ImageIO.read(new File("src/images/pawnw.png"));
+        Image pawnb = ImageIO.read(new File("src/images/pawnb.png"));
+        Image rookw = ImageIO.read(new File("src/images/rookw.png"));
+        Image rookb = ImageIO.read(new File("src/images/rookb.png"));
+        Image horsew = ImageIO.read(new File("src/images/horsew.png"));
+        Image horseb = ImageIO.read(new File("src/images/horseb.png"));
+        Image bishopw = ImageIO.read(new File("src/images/bishopw.png"));
+        Image bishopb = ImageIO.read(new File("src/images/bishopb.png"));
+        Image queenw = ImageIO.read(new File("src/images/queenw.png"));
+        Image queenb = ImageIO.read(new File("src/images/queenb.png"));
+        Image kingw = ImageIO.read(new File("src/images/kingw.png"));
+        Image kingb = ImageIO.read(new File("src/images/kingb.png"));
+
+
+
+
 
         tablero = new JPanel(new GridLayout(8, 8)); // GridLayout con 8 filas y 8 columnas
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                JButton button = new JButton("(" + i + "," + j + ")");
+                JButton button = new JButton(i + "," + j);
                 button.addActionListener(new ButtonClickListener(i, j)); // Listener personalizado para cada botón
+                if (i % 2 == 0 && j % 2 == 0) {
+                    button.setBackground(new Color(203, 255, 161));
+                } else if (i % 2 != 0 && j % 2 != 0) {
+                    button.setBackground(new Color(203, 255, 161));
+                }else {
+                    button.setBackground(new Color(82, 128, 29));
+                }
+                button.setText("");
                 casillas[i][j] = button;
                 tablero.add(button);
             }
         }
+// Piece establishment
+        for (int i = 0; i < 8; i++) {
+            casillas[1][i].setIcon(new ImageIcon(pawnb));
+            casillas[6][i].setIcon(new ImageIcon(pawnw));
+        }
+        casillas[0][0].setIcon(new ImageIcon(rookb));
+        casillas[0][7].setIcon(new ImageIcon(rookb));
+        casillas[7][7].setIcon(new ImageIcon(rookw));
+        casillas[7][0].setIcon(new ImageIcon(rookw));
+        casillas[0][1].setIcon(new ImageIcon(horseb));
+        casillas[0][6].setIcon(new ImageIcon(horseb));
+        casillas[7][1].setIcon(new ImageIcon(horsew));
+        casillas[7][6].setIcon(new ImageIcon(horsew));
+        casillas[0][2].setIcon(new ImageIcon(bishopb));
+        casillas[0][5].setIcon(new ImageIcon(bishopb));
+        casillas[7][2].setIcon(new ImageIcon(bishopw));
+        casillas[7][5].setIcon(new ImageIcon(bishopw));
+        casillas[0][3].setIcon(new ImageIcon(queenb));
+        casillas[0][4].setIcon(new ImageIcon(kingb));
+        casillas[7][3].setIcon(new ImageIcon(queenw));
+        casillas[7][4].setIcon(new ImageIcon(kingw));
+
+
 
         this.add(tablero);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
