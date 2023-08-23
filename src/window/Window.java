@@ -11,10 +11,11 @@ import java.io.IOException;
 
 public class Window extends JFrame {
     private JPanel tablero;
-
+    private int contador = 0;
 
     private JButton[][] casillas = new JButton[8][8]; //Matriz bidimensional para guardar las casillas (Botones)
-
+    private Color clarito = new Color(203, 255, 161);
+    private Color oscuro = new Color(82, 128, 29);
 
 /*
 * import javax.swing.JButton;
@@ -83,16 +84,37 @@ public class GridPanelExample {
 
         tablero = new JPanel(new GridLayout(8, 8)); // GridLayout con 8 filas y 8 columnas
 
+
+
+        ActionListener moverFicha = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (contador % 2 == 0){
+                    casillas[0][0].setBackground(Color.gray);
+
+                }
+                else {
+                    casillas[0][0].setBackground(clarito);
+
+                }
+                contador ++;
+
+            }
+        };
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 JButton button = new JButton(i + "," + j);
                 button.addActionListener(new ButtonClickListener(i, j)); // Listener personalizado para cada botón
                 if (i % 2 == 0 && j % 2 == 0) {
-                    button.setBackground(new Color(203, 255, 161));
+                    button.setBackground(clarito);
+                    button.addActionListener(moverFicha);
                 } else if (i % 2 != 0 && j % 2 != 0) {
-                    button.setBackground(new Color(203, 255, 161));
+                    button.setBackground(clarito);
+                    button.addActionListener(moverFicha);
                 }else {
-                    button.setBackground(new Color(82, 128, 29));
+                    button.setBackground(oscuro);
+                    button.addActionListener(moverFicha);
                 }
                 button.setText("");
                 casillas[i][j] = button;
@@ -104,22 +126,28 @@ public class GridPanelExample {
             casillas[1][i].setIcon(new ImageIcon(pawnb));
             casillas[6][i].setIcon(new ImageIcon(pawnw));
         }
+
+        // black
         casillas[0][0].setIcon(new ImageIcon(rookb));
         casillas[0][7].setIcon(new ImageIcon(rookb));
-        casillas[7][7].setIcon(new ImageIcon(rookw));
-        casillas[7][0].setIcon(new ImageIcon(rookw));
         casillas[0][1].setIcon(new ImageIcon(horseb));
         casillas[0][6].setIcon(new ImageIcon(horseb));
-        casillas[7][1].setIcon(new ImageIcon(horsew));
-        casillas[7][6].setIcon(new ImageIcon(horsew));
         casillas[0][2].setIcon(new ImageIcon(bishopb));
         casillas[0][5].setIcon(new ImageIcon(bishopb));
-        casillas[7][2].setIcon(new ImageIcon(bishopw));
-        casillas[7][5].setIcon(new ImageIcon(bishopw));
         casillas[0][3].setIcon(new ImageIcon(queenb));
         casillas[0][4].setIcon(new ImageIcon(kingb));
+
+        // white
+
         casillas[7][3].setIcon(new ImageIcon(queenw));
         casillas[7][4].setIcon(new ImageIcon(kingw));
+        casillas[7][7].setIcon(new ImageIcon(rookw));
+        casillas[7][0].setIcon(new ImageIcon(rookw));
+        casillas[7][1].setIcon(new ImageIcon(horsew));
+        casillas[7][6].setIcon(new ImageIcon(horsew));
+        casillas[7][2].setIcon(new ImageIcon(bishopw));
+        casillas[7][5].setIcon(new ImageIcon(bishopw));
+
 
 
 
@@ -141,7 +169,9 @@ public class GridPanelExample {
         }
 
         public void actionPerformed(ActionEvent event) {
-            System.out.println("Se hizo clic en el botón (" + row + "," + column + ")");
+
+
+
         }
     }
 
